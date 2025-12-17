@@ -2,6 +2,7 @@ package org.mathieu.cleanrmapi.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
 import org.mathieu.cleanrmapi.domain.models.character.Character
+import org.mathieu.cleanrmapi.domain.models.character.LocationPreview
 
 interface CharacterRepository {
     /**
@@ -25,4 +26,12 @@ interface CharacterRepository {
      * @return Details of the specified character.
      */
     suspend fun getCharacter(id: Int): Character
+
+    /**
+     * Fetches the preview of a location based on the provided ID.
+     *
+     * @param id The unique identifier of the character to be fetched.
+     * @return Details of the specified character.
+     */
+    suspend fun getLocationPreview(id: Int) : LocationPreview
 }

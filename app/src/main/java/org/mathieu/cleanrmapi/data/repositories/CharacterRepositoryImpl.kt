@@ -13,7 +13,9 @@ import org.mathieu.cleanrmapi.data.local.objects.toModel
 import org.mathieu.cleanrmapi.data.local.objects.toRealmObject
 import org.mathieu.cleanrmapi.data.remote.CharacterApi
 import org.mathieu.cleanrmapi.data.remote.responses.CharacterResponse
+import org.mathieu.cleanrmapi.data.remote.responses.LocationResponse
 import org.mathieu.cleanrmapi.domain.models.character.Character
+import org.mathieu.cleanrmapi.domain.models.character.LocationPreview
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
 
 private const val CHARACTER_PREFS = "character_repository_preferences"
@@ -93,7 +95,18 @@ internal class CharacterRepositoryImpl(
             }
             ?: throw Exception("Character not found.")
 
+    override suspend fun getLocationPreview(id: Int): LocationPreview =
+        characterApi.getLocationId(id = id)?.toDomain()
+            ?: throw Exception("Location not found")
+}
 
+private fun LocationResponse.toDomain(): LocationPreview? {
+    return LocationPreview(
+        id = id,
+        name = name,
+        type = type,
+        dimension = dimension
+    )
 }
 
 

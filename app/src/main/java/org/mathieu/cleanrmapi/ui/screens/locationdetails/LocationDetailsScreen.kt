@@ -1,11 +1,10 @@
-package org.mathieu.cleanrmapi.ui.screens.characterdetails
+package org.mathieu.cleanrmapi.ui.screens.locationdetails
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,11 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,10 +24,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -44,25 +34,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil.compose.SubcomposeAsyncImage
-import org.mathieu.cleanrmapi.domain.models.location.Location
 import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
 import org.mathieu.cleanrmapi.ui.core.theme.Purple40
-import org.mathieu.cleanrmapi.ui.feedback.rememberClickHaptic
 
-private typealias UIState = CharacterDetailsState
+private typealias UIState = LocationDetailsState
 
 @Composable
-fun CharacterDetailsScreen(
+fun LocationDetailsScreen(
     navController: NavController,
     id: Int
 ) {
-    val viewModel: CharacterDetailsViewModel = viewModel()
+    val viewModel: LocationDetailsViewModel = viewModel()
     val state by viewModel.state.collectAsState()
 
-    viewModel.init(characterId = id)
+    viewModel.init(locationId = id)
 
-    CharacterDetailsContent(
+    LocationDetailsContent(
         state = state,
         onClickBack = navController::popBackStack
     )
@@ -72,9 +59,8 @@ fun CharacterDetailsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-private fun CharacterDetailsContent(
+private fun LocationDetailsContent(
     state: UIState = UIState(),
-    onSelectLocation: (Int) -> Unit = { },
     onClickBack: () -> Unit = { }
 ) = Scaffold(topBar = {
 
@@ -120,15 +106,6 @@ private fun CharacterDetailsContent(
 
                 Box(Modifier.align(Alignment.TopCenter)) {
 
-                    SubcomposeAsyncImage(
-                        modifier = Modifier
-                            .blur(100.dp)
-                            .alpha(0.3f)
-                            .fillMaxWidth(),
-                        model = state.avatarUrl,
-                        contentDescription = null
-                    )
-
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -151,14 +128,6 @@ private fun CharacterDetailsContent(
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    SubcomposeAsyncImage(
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .shadow(3.dp),
-                        model = state.avatarUrl,
-                        contentDescription = null
-                    )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
@@ -168,15 +137,15 @@ private fun CharacterDetailsContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
-                    ) {
-                        LocationPvCard(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable { onSelectLocation(state.locId) },
-                            locName = state.locName,
-                            locType = state.locType
-                        )
-                    }
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(
+                                        Color.Transparent,
+                                        MaterialTheme.colorScheme.background
+                                    )
+                                )
+                            )
+                    )
                 }
 
 
@@ -185,44 +154,10 @@ private fun CharacterDetailsContent(
     }
 }
 
-@Composable
-private fun LocationPvCard(
-    modifier: Modifier,
-    locName: String,
-    locType: String,
-    onClick: () -> Unit = {}
-) {
-    val haptic = rememberClickHaptic()
-
-    Row(
-        modifier = modifier
-            .shadow(5.dp)
-            .background(Color.White)
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .clickable {
-                haptic.click()
-                onClick()
-            },
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Column {
-            Text(text = locName)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = locType)
-        }
-    }
-}
-
-
 
 @Preview
 @Composable
-private fun CharacterDetailsPreview() = PreviewContent {
-    CharacterDetailsContent()
+private fun LocationDetailsPreview() = PreviewContent {
+    LocationDetailsContent()
 }
 

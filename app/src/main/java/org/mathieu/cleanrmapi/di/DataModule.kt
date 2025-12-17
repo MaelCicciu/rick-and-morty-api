@@ -8,7 +8,9 @@ import org.mathieu.cleanrmapi.data.local.RealmDatabase
 import org.mathieu.cleanrmapi.data.remote.CharacterApi
 import org.mathieu.cleanrmapi.data.remote.createHttpClient
 import org.mathieu.cleanrmapi.data.repositories.CharacterRepositoryImpl
+import org.mathieu.cleanrmapi.data.repositories.LocationRepositoryImpl
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
+import org.mathieu.cleanrmapi.domain.repositories.LocationRepository
 
 //https://rickandmortyapi.com/documentation/#rest
 private const val RMAPI_URL = "https://rickandmortyapi.com/api/"
@@ -28,5 +30,7 @@ val dataModule = module {
     single { CharacterApi(get()) }
 
     single<CharacterRepository> { CharacterRepositoryImpl(get(), get(), get()) }
+
+    single<LocationRepository> { LocationRepositoryImpl(get(), get()) }
 
 }

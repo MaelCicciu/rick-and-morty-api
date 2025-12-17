@@ -6,7 +6,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.HttpStatusCode
 import org.mathieu.cleanrmapi.data.remote.responses.CharacterResponse
+import org.mathieu.cleanrmapi.data.remote.responses.LocationResponse
 import org.mathieu.cleanrmapi.data.remote.responses.PaginatedResponse
+import org.mathieu.cleanrmapi.domain.models.character.LocationPreview
 
 internal class CharacterApi(private val client: HttpClient) {
 
@@ -41,4 +43,15 @@ internal class CharacterApi(private val client: HttpClient) {
         .accept(HttpStatusCode.OK)
         .body()
 
+    /**
+     * Fetches the details of a location with the given ID from the service.
+     *
+     * @param id The unique identifier of the location to retrieve.
+     * @return The [LocationPreview] representing the details of the character.
+     * @throws HttpException if the request fails or if the status code is not [HttpStatusCode.OK].
+     */
+    suspend fun getLocationId(id: Int): LocationResponse? = client
+        .get("location/$id")
+        .accept(HttpStatusCode.OK)
+        .body()
 }

@@ -1,7 +1,10 @@
 package org.mathieu.cleanrmapi.ui.screens.characterdetails
 
 import android.app.Application
+import kotlinx.coroutines.flow.single
 import org.koin.core.component.inject
+import org.mathieu.cleanrmapi.domain.models.character.Character
+import org.mathieu.cleanrmapi.domain.models.location.Location
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
 import org.mathieu.cleanrmapi.ui.core.ViewModel
 
@@ -15,8 +18,24 @@ class CharacterDetailsViewModel(application: Application) : ViewModel<CharacterD
             source = { characterRepository.getCharacter(id = characterId) }
         ) {
 
-            onSuccess {
-                updateState { copy(avatarUrl = it.avatarUrl, name = it.name, error = null) }
+            onSuccess { character ->
+                val locId = character.getLocationId()
+                updateState { copy(avatarUrl = character.avatarUrl, name = character.name, error = null) }
+
+                fetchData(
+                    source = { characterRepository.getLocationPreview(id = locId) }
+                ) {
+
+                    onSuccess {
+                        updateState { copy(locId = it.id, locName = it.name, locType = it.type, error = null) }
+                    }
+
+                    onFailure {
+                        updateState { copy(error = it.toString()) }
+                    }
+
+                    updateState { copy(isLoading = false) }
+                }
             }
 
             onFailure {
@@ -26,8 +45,6 @@ class CharacterDetailsViewModel(application: Application) : ViewModel<CharacterD
             updateState { copy(isLoading = false) }
         }
     }
-
-
 }
 
 
@@ -35,5 +52,8 @@ data class CharacterDetailsState(
     val isLoading: Boolean = true,
     val avatarUrl: String = "",
     val name: String = "",
-    val error: String? = null
+    val error: String? = null,
+    val locId: Int = -1,
+    val locName: String = "",
+    val locType: String = ""
 )
