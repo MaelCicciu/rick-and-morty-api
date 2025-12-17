@@ -3,7 +3,6 @@ package org.mathieu.cleanrmapi.data.repositories
 import kotlinx.serialization.InternalSerializationApi
 import org.mathieu.cleanrmapi.data.remote.CharacterApi
 import org.mathieu.cleanrmapi.data.remote.responses.LocationResponse
-import org.mathieu.cleanrmapi.domain.models.character.LocationPreview
 import org.mathieu.cleanrmapi.domain.models.location.Location
 import org.mathieu.cleanrmapi.domain.repositories.LocationRepository
 
