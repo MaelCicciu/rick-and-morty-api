@@ -31,6 +31,6 @@ val dataModule = module {
 
     single<CharacterRepository> { CharacterRepositoryImpl(get(), get(), get()) }
 
-    single<LocationRepository> { LocationRepositoryImpl(get(), get()) }
+    single<LocationRepository> { LocationRepositoryImpl(get()) }
 
 }

@@ -1,9 +1,7 @@
 package org.mathieu.cleanrmapi.ui.screens.locationdetails
 
 import android.app.Application
-import kotlinx.coroutines.flow.single
 import org.koin.core.component.inject
-import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
 import org.mathieu.cleanrmapi.domain.repositories.LocationRepository
 import org.mathieu.cleanrmapi.ui.core.ViewModel
 

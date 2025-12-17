@@ -1,9 +1,9 @@
 package org.mathieu.cleanrmapi.data.remote.responses
 
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
-import org.mathieu.cleanrmapi.domain.models.character.Character
 
-/**
+@InternalSerializationApi /**
  * Represents detailed information about a character, typically received from an API response.
  *
  * @property id The unique identifier for the character.
@@ -35,6 +35,6 @@ data class CharacterResponse(
     val created: String,
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class CharacterLocationResponse(val name: String, val url: String)
 

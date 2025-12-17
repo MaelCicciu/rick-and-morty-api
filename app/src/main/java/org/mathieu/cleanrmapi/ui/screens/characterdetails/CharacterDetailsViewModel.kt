@@ -1,10 +1,7 @@
 package org.mathieu.cleanrmapi.ui.screens.characterdetails
 
 import android.app.Application
-import kotlinx.coroutines.flow.single
 import org.koin.core.component.inject
-import org.mathieu.cleanrmapi.domain.models.character.Character
-import org.mathieu.cleanrmapi.domain.models.location.Location
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
 import org.mathieu.cleanrmapi.ui.core.ViewModel
 
