@@ -1,8 +1,9 @@
 package org.mathieu.cleanrmapi.data.remote.responses
 
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
-/**
+@InternalSerializationApi /**
  * Represents detailed information about a location, typically received from an API response.
  *
  * @property id The unique identifier for the location.

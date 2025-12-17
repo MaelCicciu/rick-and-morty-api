@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.HttpStatusCode
+import kotlinx.serialization.InternalSerializationApi
 import org.mathieu.cleanrmapi.data.remote.responses.CharacterResponse
 import org.mathieu.cleanrmapi.data.remote.responses.LocationResponse
 import org.mathieu.cleanrmapi.data.remote.responses.PaginatedResponse
@@ -21,6 +22,7 @@ internal class CharacterApi(private val client: HttpClient) {
      * @return A paginated response containing a list of [CharacterResponse] for the specified page.
      * @throws HttpException if the request fails or if the status code is not [HttpStatusCode.OK].
      */
+    @OptIn(InternalSerializationApi::class)
     suspend fun getCharacters(page: Int?): PaginatedResponse<CharacterResponse> = client
         .get("character/") {
             if (page != null)
@@ -38,6 +40,7 @@ internal class CharacterApi(private val client: HttpClient) {
      * @return The [CharacterResponse] representing the details of the character.
      * @throws HttpException if the request fails or if the status code is not [HttpStatusCode.OK].
      */
+    @OptIn(InternalSerializationApi::class)
     suspend fun getCharacter(id: Int): CharacterResponse? = client
         .get("character/$id")
         .accept(HttpStatusCode.OK)
@@ -50,6 +53,7 @@ internal class CharacterApi(private val client: HttpClient) {
      * @return The [LocationPreview] representing the details of the character.
      * @throws HttpException if the request fails or if the status code is not [HttpStatusCode.OK].
      */
+    @OptIn(InternalSerializationApi::class)
     suspend fun getLocationId(id: Int): LocationResponse? = client
         .get("location/$id")
         .accept(HttpStatusCode.OK)

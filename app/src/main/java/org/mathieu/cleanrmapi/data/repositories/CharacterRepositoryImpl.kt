@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.InternalSerializationApi
 import org.mathieu.cleanrmapi.data.local.CharacterLocal
 import org.mathieu.cleanrmapi.data.local.objects.CharacterObject
 import org.mathieu.cleanrmapi.data.local.objects.toModel
@@ -50,6 +51,7 @@ internal class CharacterRepositoryImpl(
      *
      * Note: If the `next` attribute from the API response is null or missing, the page number is set to -1, indicating there's no more data to fetch.
      */
+    @OptIn(InternalSerializationApi::class)
     private suspend fun fetchNext() {
 
         val page = context.dataStore.data.map { prefs -> prefs[nextPage] }.first()
@@ -86,6 +88,7 @@ internal class CharacterRepositoryImpl(
      * @return The [Character] object representing the character details.
      * @throws Exception If the character cannot be found both locally and via the API.
      */
+    @OptIn(InternalSerializationApi::class)
     override suspend fun getCharacter(id: Int): Character =
         characterLocal.getCharacter(id)?.toModel()
             ?: characterApi.getCharacter(id = id)?.let { response ->
@@ -95,11 +98,13 @@ internal class CharacterRepositoryImpl(
             }
             ?: throw Exception("Character not found.")
 
+    @OptIn(InternalSerializationApi::class)
     override suspend fun getLocationPreview(id: Int): LocationPreview =
         characterApi.getLocationId(id = id)?.toDomain()
             ?: throw Exception("Location not found")
 }
 
+@OptIn(InternalSerializationApi::class)
 private fun LocationResponse.toDomain(): LocationPreview? {
     return LocationPreview(
         id = id,
