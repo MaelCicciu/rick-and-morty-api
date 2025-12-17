@@ -7,6 +7,8 @@ import org.mathieu.cleanrmapi.domain.feedback.HapticManager
 /**
  * Manager for vibrations
  * Applies vibrations to clicks
+ *
+ * @param haptic Extends the HapticFeedback interface
  */
 class AndroidHapticManager(
     private val haptic: HapticFeedback

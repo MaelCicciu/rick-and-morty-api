@@ -98,6 +98,18 @@ internal class CharacterRepositoryImpl(
             }
             ?: throw Exception("Character not found.")
 
+    /**
+     * Retrieves the preview of the location with the specified ID.
+     *
+     * The function follows these steps:
+     * 1. Fetches the location from the API using the id of the location
+     * 2. Uses toDomain() to map the DTO model to the domain model
+     * 3. If no data is fetched, throws an exception
+     *
+     * @param id The unique identifier of the location to retrieve.
+     * @return The [LocationPreview] object representing the location preview.
+     * @throws Exception If the character cannot be found via the API.
+     */
     @OptIn(InternalSerializationApi::class)
     override suspend fun getLocationPreview(id: Int): LocationPreview =
         characterApi.getLocationId(id = id)?.toDomain()

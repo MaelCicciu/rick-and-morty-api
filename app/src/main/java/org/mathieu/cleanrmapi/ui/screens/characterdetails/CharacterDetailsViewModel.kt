@@ -10,6 +10,15 @@ class CharacterDetailsViewModel(application: Application) : ViewModel<CharacterD
 
     private val characterRepository: CharacterRepository by inject()
 
+    /**
+     * The init function uses the repositories function to communicate with the data layer
+     * It will use a characterId to fetch the character's information and a preview of their location
+     * In this function, the first fetch is used to specifie the 2nd one
+     *
+     *
+     * @param characterId The unique identifier of the character to be fetched.
+     * @return Details of the specified character and their location.
+     */
     fun init(characterId: Int) {
         fetchData(
             source = { characterRepository.getCharacter(id = characterId) }
